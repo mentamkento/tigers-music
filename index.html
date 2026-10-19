@@ -11,7 +11,7 @@
 body{
     font-family:sans-serif;
     max-width:1200px;
-    margin:0 auto;
+    margin:auto;
     padding:20px;
     line-height:1.6;
 }
@@ -40,7 +40,7 @@ select{
 }
 
 .change-block{
-    margin-bottom:20px;
+    margin-bottom:30px;
 }
 
 table{
@@ -64,32 +64,32 @@ th{
 
 th:nth-child(1),
 td:nth-child(1){
-    width:20%;
+    width:30%;
 }
 
 th:nth-child(2),
 td:nth-child(2){
-    width:35%;
+    width:30%;
 }
 
 th:nth-child(3),
 td:nth-child(3){
-    width:35%;
+    width:20%;
 }
 
 th:nth-child(4),
 td:nth-child(4){
-    width:10%;
+    width:20%;
 }
 
 .hidden{
     display:none;
 }
 
-.back-button{
-    margin-bottom:15px;
+button{
     padding:8px 12px;
     cursor:pointer;
+    margin-bottom:15px;
 }
 
 </style>
@@ -99,8 +99,7 @@ td:nth-child(4){
 
 <h1>阪神タイガース登場曲アーカイブ</h1>
 
-<label for="yearSelect">年度：</label>
-
+<label>年度：</label>
 <select id="yearSelect"></select>
 
 <hr>
@@ -135,20 +134,20 @@ fetch("archive_20261020.csv")
         };
     });
 
-    setupYearSelect();
+    setupYears();
 
 });
 
-function setupYearSelect(){
+function setupYears(){
+
+    const years =
+        [...new Set(allData.map(r => r.year))]
+        .sort((a,b)=>b-a);
 
     const select =
         document.getElementById("yearSelect");
 
-    const years =
-        [...new Set(allData.map(r => r.year))]
-        .sort((a,b) => b-a);
-
-    years.forEach(year => {
+    years.forEach(year=>{
 
         const option =
             document.createElement("option");
@@ -160,7 +159,7 @@ function setupYearSelect(){
 
     });
 
-    select.addEventListener("change", () => {
+    select.addEventListener("change",()=>{
 
         showPlayers(select.value);
 
@@ -178,8 +177,8 @@ function showPlayers(year){
     const players =
         [...new Set(
             allData
-            .filter(r => r.year === year)
-            .map(r => r.player)
+            .filter(r=>r.year===year)
+            .map(r=>r.player)
         )]
         .sort();
 
@@ -189,7 +188,7 @@ function showPlayers(year){
     list.innerHTML =
         `<h2>${year}年 選手一覧</h2>`;
 
-    players.forEach(player => {
+    players.forEach(player=>{
 
         const div =
             document.createElement("div");
@@ -197,8 +196,10 @@ function showPlayers(year){
         div.className = "player";
         div.textContent = player;
 
-        div.onclick = () => {
-            showPlayerDetail(year, player);
+        div.onclick = ()=>{
+
+            showPlayerDetail(year,player);
+
         };
 
         list.appendChild(div);
@@ -207,17 +208,17 @@ function showPlayers(year){
 
 }
 
-function showPlayerDetail(year, player){
+function showPlayerDetail(year,player){
 
     const rows =
         allData.filter(r =>
-            r.year === year &&
-            r.player === player
+            r.year===year &&
+            r.player===player
         );
 
     const grouped = {};
 
-    rows.forEach(row => {
+    rows.forEach(row=>{
 
         if(!grouped[row.order]){
 
@@ -231,39 +232,40 @@ function showPlayerDetail(year, player){
 
     const orders =
         Object.keys(grouped)
-        .sort((a,b) => a-b);
+        .sort((a,b)=>a-b);
 
     let html = `
-        <button class="back-button"
-            onclick="document.getElementById('playerDetail').classList.add('hidden')">
+        <button onclick="
+            document.getElementById('playerDetail').classList.add('hidden')
+        ">
             閉じる
         </button>
 
         <h2>${player} (${year}年)</h2>
     `;
 
-    orders.forEach(order => {
+    orders.forEach(order=>{
 
         html += `
         <div class="change-block">
 
         <table>
 
-            <tr>
-                <th>条件</th>
-                <th>曲名</th>
-                <th>歌手名</th>
-                <th>備考</th>
-            </tr>
+        <tr>
+            <th>歌手名</th>
+            <th>曲名</th>
+            <th>条件等</th>
+            <th>備考</th>
+        </tr>
         `;
 
-        grouped[order].forEach(row => {
+        grouped[order].forEach(row=>{
 
             html += `
             <tr>
-                <td>${row.condition}</td>
-                <td>${row.song}</td>
                 <td>${row.artist}</td>
+                <td>${row.song}</td>
+                <td>${row.condition}</td>
                 <td>${row.note}</td>
             </tr>
             `;
@@ -295,4 +297,3 @@ function showPlayerDetail(year, player){
 
 </body>
 </html>
-``
