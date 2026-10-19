@@ -7,27 +7,32 @@
 <title>阪神タイガース登場曲アーカイブ</title>
 
 <style>
+
 body{
     font-family:sans-serif;
-    margin:20px;
-    max-width:1000px;
-    margin:auto;
+    max-width:1200px;
+    margin:0 auto;
     padding:20px;
+    line-height:1.6;
 }
 
-h1,h2,h3{
-    color:#222;
+h1{
+    margin-bottom:20px;
+}
+
+h2{
+    margin-top:30px;
 }
 
 select{
     padding:8px;
-    margin:5px;
+    font-size:16px;
 }
 
 .player{
-    cursor:pointer;
     padding:8px;
     border-bottom:1px solid #ddd;
+    cursor:pointer;
 }
 
 .player:hover{
@@ -35,30 +40,58 @@ select{
 }
 
 .change-block{
-    border:1px solid #ddd;
-    border-radius:8px;
-    padding:12px;
-    margin-bottom:16px;
+    margin-bottom:20px;
 }
 
 table{
     width:100%;
+    table-layout:fixed;
     border-collapse:collapse;
 }
 
-th,td{
+th,
+td{
     border:1px solid #ddd;
     padding:8px;
-    text-align:left;
+    vertical-align:top;
+    white-space:normal;
+    word-break:break-word;
 }
 
 th{
-    background:#f0f0f0;
+    background:#f5f5f5;
+}
+
+th:nth-child(1),
+td:nth-child(1){
+    width:20%;
+}
+
+th:nth-child(2),
+td:nth-child(2){
+    width:35%;
+}
+
+th:nth-child(3),
+td:nth-child(3){
+    width:35%;
+}
+
+th:nth-child(4),
+td:nth-child(4){
+    width:10%;
 }
 
 .hidden{
     display:none;
 }
+
+.back-button{
+    margin-bottom:15px;
+    padding:8px 12px;
+    cursor:pointer;
+}
+
 </style>
 </head>
 
@@ -66,10 +99,9 @@ th{
 
 <h1>阪神タイガース登場曲アーカイブ</h1>
 
-<div>
-    <label>年度：</label>
-    <select id="yearSelect"></select>
-</div>
+<label for="yearSelect">年度：</label>
+
+<select id="yearSelect"></select>
 
 <hr>
 
@@ -82,15 +114,15 @@ th{
 let allData = [];
 
 fetch("archive_20261020.csv")
-.then(res => res.text())
+.then(response => response.text())
 .then(text => {
 
     const rows = text.trim().split("\n");
-    const headers = rows[0].split(",");
 
     allData = rows.slice(1).map(row => {
 
-        const values = row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g);
+        const values =
+            row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g);
 
         return {
             year: values[0],
@@ -103,30 +135,39 @@ fetch("archive_20261020.csv")
         };
     });
 
-    initializeYears();
+    setupYearSelect();
+
 });
 
-function initializeYears(){
+function setupYearSelect(){
 
-    const years = [...new Set(allData.map(r=>r.year))]
-        .sort((a,b)=>b-a);
+    const select =
+        document.getElementById("yearSelect");
 
-    const select = document.getElementById("yearSelect");
+    const years =
+        [...new Set(allData.map(r => r.year))]
+        .sort((a,b) => b-a);
 
-    years.forEach(year=>{
+    years.forEach(year => {
 
-        const option = document.createElement("option");
+        const option =
+            document.createElement("option");
+
         option.value = year;
         option.textContent = year + "年";
+
         select.appendChild(option);
 
     });
 
-    select.addEventListener("change", ()=>{
+    select.addEventListener("change", () => {
+
         showPlayers(select.value);
+
     });
 
     showPlayers(years[0]);
+
 }
 
 function showPlayers(year){
@@ -137,46 +178,51 @@ function showPlayers(year){
     const players =
         [...new Set(
             allData
-            .filter(r=>r.year===year)
-            .map(r=>r.player)
+            .filter(r => r.year === year)
+            .map(r => r.player)
         )]
         .sort();
 
-    const div = document.getElementById("playerList");
+    const list =
+        document.getElementById("playerList");
 
-    div.innerHTML =
+    list.innerHTML =
         `<h2>${year}年 選手一覧</h2>`;
 
-    players.forEach(player=>{
+    players.forEach(player => {
 
-        const p = document.createElement("div");
+        const div =
+            document.createElement("div");
 
-        p.className = "player";
-        p.textContent = player;
+        div.className = "player";
+        div.textContent = player;
 
-        p.onclick = ()=>{
-            showPlayerDetail(year,player);
+        div.onclick = () => {
+            showPlayerDetail(year, player);
         };
 
-        div.appendChild(p);
+        list.appendChild(div);
 
     });
+
 }
 
-function showPlayerDetail(year,player){
+function showPlayerDetail(year, player){
 
-    const rows = allData.filter(
-        r =>
-        r.year===year &&
-        r.player===player
-    );
+    const rows =
+        allData.filter(r =>
+            r.year === year &&
+            r.player === player
+        );
 
     const grouped = {};
 
-    rows.forEach(row=>{
+    rows.forEach(row => {
 
         if(!grouped[row.order]){
+
             grouped[row.order] = [];
+
         }
 
         grouped[row.order].push(row);
@@ -185,33 +231,40 @@ function showPlayerDetail(year,player){
 
     const orders =
         Object.keys(grouped)
-        .sort((a,b)=>a-b);
+        .sort((a,b) => a-b);
 
-    let html =
-        `<h2>${player} (${year}年)</h2>`;
+    let html = `
+        <button class="back-button"
+            onclick="document.getElementById('playerDetail').classList.add('hidden')">
+            閉じる
+        </button>
 
-    orders.forEach(order=>{
+        <h2>${player} (${year}年)</h2>
+    `;
+
+    orders.forEach(order => {
 
         html += `
         <div class="change-block">
-        <h3>変更履歴 ${order}</h3>
+
         <table>
-        <tr>
-        <th>条件</th>
-        <th>曲名</th>
-        <th>歌手名</th>
-        <th>備考</th>
-        </tr>
+
+            <tr>
+                <th>条件</th>
+                <th>曲名</th>
+                <th>歌手名</th>
+                <th>備考</th>
+            </tr>
         `;
 
-        grouped[order].forEach(row=>{
+        grouped[order].forEach(row => {
 
             html += `
             <tr>
-            <td>${row.condition}</td>
-            <td>${row.song}</td>
-            <td>${row.artist}</td>
-            <td>${row.note}</td>
+                <td>${row.condition}</td>
+                <td>${row.song}</td>
+                <td>${row.artist}</td>
+                <td>${row.note}</td>
             </tr>
             `;
 
@@ -219,6 +272,7 @@ function showPlayerDetail(year,player){
 
         html += `
         </table>
+
         </div>
         `;
 
@@ -228,13 +282,17 @@ function showPlayerDetail(year,player){
         document.getElementById("playerDetail");
 
     detail.innerHTML = html;
+
     detail.classList.remove("hidden");
 
     detail.scrollIntoView({
         behavior:"smooth"
     });
+
 }
+
 </script>
 
 </body>
 </html>
+``
