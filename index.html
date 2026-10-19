@@ -92,9 +92,32 @@ button{
     margin-bottom:15px;
 }
 
+#topButton{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+
+    padding:10px 15px;
+
+    border:none;
+    border-radius:8px;
+
+    background:#333;
+    color:#fff;
+
+    cursor:pointer;
+
+    display:none;
+
+    z-index:999;
+}
+
+#topButton:hover{
+    background:#555;
+}
+
 </style>
 </head>
-
 <body>
 
 <h1>阪神タイガース登場曲アーカイブ</h1>
@@ -123,15 +146,15 @@ fetch("archive_20261020.csv")
         const values =
             row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g);
 
-return {
-    year: values[0]?.trim(),
-    player: values[1]?.trim(),
-    artist: values[2]?.replaceAll('"','').trim(),
-    song: values[3]?.replaceAll('"','').trim(),
-    condition: values[4]?.trim() || "",
-    note: values[5]?.trim() || "",
-    order: values[6]?.trim() || "1"
-};
+        return {
+            year: values[0]?.trim(),
+            player: values[1]?.trim(),
+            artist: values[2]?.replaceAll('"','').trim(),
+            song: values[3]?.replaceAll('"','').trim(),
+            condition: values[4]?.trim() || "",
+            note: values[5]?.trim() || "",
+            order: values[6]?.trim() || "1"
+        };
 
     });
 
@@ -221,16 +244,18 @@ function showPlayerDetail(year,player){
 
     rows.forEach(row=>{
 
-    const order =
-        String(row.order).trim();
+        const order =
+            String(row.order).trim();
 
-    if(!grouped[order]){
-        grouped[order] = [];
-    }
+        if(!grouped[order]){
 
-    grouped[order].push(row);
+            grouped[order] = [];
 
-});
+        }
+
+        grouped[order].push(row);
+
+    });
 
     const orders =
         Object.keys(grouped)
@@ -295,11 +320,39 @@ function showPlayerDetail(year,player){
 
 }
 
+window.addEventListener("scroll",()=>{
+
+    const button =
+        document.getElementById("topButton");
+
+    if(window.scrollY > 300){
+
+        button.style.display = "block";
+
+    }else{
+
+        button.style.display = "none";
+
+    }
+
+});
+
+function scrollToTop(){
+
+    window.scrollTo({
+
+        top:0,
+        behavior:"smooth"
+
+    });
+
+}
+
 </script>
 
 <button id="topButton" onclick="scrollToTop()">
 ▲ 上に戻る
 </button>
-    
+
 </body>
 </html>
