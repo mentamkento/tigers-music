@@ -174,7 +174,7 @@ summary:hover{
 
 let allData = [];
 
-fetch("archive_20261020.csv")
+fetch("archive_20261021.csv")
 .then(response => response.text())
 .then(text => {
 
@@ -192,9 +192,10 @@ fetch("archive_20261020.csv")
             song: values[3]?.replaceAll('"','').trim(),
             condition: values[4]?.trim() || "",
             note: values[5]?.trim() || "",
-            order: values[6]?.trim() || "1"
+            order: values[6]?.trim() || "1",
+            number: values[7]?.trim() || "999",
+            displayNumber: values[8]?.trim() || "#999"
         };
-
     });
 
     setupYears();
@@ -238,12 +239,39 @@ function showPlayers(year){
         .classList.add("hidden");
 
     const players =
-        [...new Set(
-            allData
-            .filter(r=>r.year===year)
-            .map(r=>r.player)
-        )]
-        .sort();
+    Object.values(
+
+        allData
+        .filter(r => r.year === year)
+
+        .reduce((acc,row) => {
+
+            if(!acc[row.player]){
+
+                acc[row.player] = {
+
+                    player: row.player,
+                    number: row.number,
+                    displayNumber: row.displayNumber
+
+                };
+
+            }
+
+            return acc;
+
+        },{})
+
+    )
+
+    .sort((a,b)=>{
+
+        if(a.number === "00") return -1;
+        if(b.number === "00") return 1;
+
+        return Number(a.number) - Number(b.number);
+
+    });
 
     const list =
         document.getElementById("playerList");
@@ -253,22 +281,27 @@ function showPlayers(year){
 
     players.forEach(player=>{
 
-        const div =
-            document.createElement("div");
+    const div =
+        document.createElement("div");
 
-        div.className = "player";
-        div.textContent = player;
+    div.className = "player";
 
-        div.onclick = ()=>{
+    div.textContent =
+        `${player.displayNumber}  ${player.player}`;
 
-            showPlayerDetail(year,player);
+    div.onclick = ()=>{
 
-        };
+        showPlayerDetail(
+            year,
+            player.player
+        );
 
-        list.appendChild(div);
+    };
 
-    });
+    list.appendChild(div);
 
+});
+    
 }
 
 function showPlayerDetail(year,player){
