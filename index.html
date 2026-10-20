@@ -16,10 +16,10 @@ body{
     line-height:1.6;
 }
 
-.youtube-icon{
-    position:fixed;
-    top:20px;
-    right:20px;
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
 }
 
 .youtube-icon img{
@@ -171,16 +171,17 @@ summary:hover{
 </head>
 <body>
 
-<a
-    href="https://www.youtube.com/@mentam_yanen"
-    target="_blank"
-    class="youtube-icon"
->
-    <img src="icon.png" alt="YouTube">
-</a>
+<div class="header">
 
-    
-<h1>阪神タイガース選手登場曲アーカイブ</h1>
+    <h1>阪神タイガース選手登場曲アーカイブ</h1>
+
+    <a class="youtube-icon"
+       href="YouTubeのURL"
+       target="_blank">
+       <img src="icon.png">
+    </a>
+
+</div>
 
 <details>
 
