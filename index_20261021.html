@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>阪神タイガース登場曲アーカイブ</title>
+
+<style>
+
+body{
+    font-family:sans-serif;
+    max-width:1200px;
+    margin:auto;
+    padding:20px;
+    line-height:1.6;
+}
+
+h1{
+    margin-bottom:20px;
+}
+
+h2{
+    margin-top:30px;
+}
+
+select{
+    padding:8px;
+    font-size:16px;
+}
+
+.player{
+    padding:8px;
+    border-bottom:1px solid #ddd;
+    cursor:pointer;
+}
+
+.player:hover{
+    background:#f5f5f5;
+}
+
+.change-block{
+    margin-bottom:30px;
+}
+
+table{
+    width:100%;
+    table-layout:fixed;
+    border-collapse:collapse;
+}
+
+th,
+td{
+    border:1px solid #ddd;
+    padding:8px;
+    vertical-align:top;
+    white-space:normal;
+    word-break:break-word;
+}
+
+th{
+    background:#f5f5f5;
+}
+
+th:nth-child(1),
+td:nth-child(1){
+    width:30%;
+}
+
+th:nth-child(2),
+td:nth-child(2){
+    width:30%;
+}
+
+th:nth-child(3),
+td:nth-child(3){
+    width:20%;
+}
+
+th:nth-child(4),
+td:nth-child(4){
+    width:20%;
+}
+
+.hidden{
+    display:none;
+}
+
+button{
+    padding:8px 12px;
+    cursor:pointer;
+    margin-bottom:15px;
+}
+
+#topButton{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+
+    padding:10px 15px;
+
+    border:none;
+    border-radius:8px;
+
+    background:#333;
+    color:#fff;
+
+    cursor:pointer;
+
+    display:none;
+
+    z-index:999;
+}
+
+#topButton:hover{
+    background:#555;
+}
+
+details{
+    margin-bottom:20px;
+    padding:10px;
+    border:1px solid #ddd;
+    border-radius:8px;
+    background:#fafafa;
+}
+
+summary{
+    cursor:pointer;
+    font-weight:bold;
+}
+
+summary:hover{
+    color:#555;
+}
+
+    
+</style>
+</head>
+<body>
+
+<h1>阪神タイガース登場曲アーカイブ</h1>
+
+<details>
+
+<summary>
+このサイトをご覧になる方へ
+</summary>
+
+<p>
+このサイトでは2023年以降の阪神タイガースの選手登場曲をまとめています。（整備中データあり）
+</p>
+
+<p>
+公式サイトの情報に基づき運営者が独自収集した資料になりますので、
+必ずしも抜け漏れがないわけではございません。
+ご了承ください。
+</p>
+
+</details>
+
+<label>年度：</label>
+<select id="yearSelect"></select>
+
+
+    
+
+<hr>
+
+<div id="playerList"></div>
+
+<div id="playerDetail" class="hidden"></div>
+
+<script>
+
+let allData = [];
+
+fetch("archive_20261020.csv")
+.then(response => response.text())
+.then(text => {
+
+    const rows = text.trim().split("\n");
+
+    allData = rows.slice(1).map(row => {
+
+        const values =
+            row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g);
+
+        return {
+            year: values[0]?.trim(),
+            player: values[1]?.trim(),
+            artist: values[2]?.replaceAll('"','').trim(),
+            song: values[3]?.replaceAll('"','').trim(),
+            condition: values[4]?.trim() || "",
+            note: values[5]?.trim() || "",
+            order: values[6]?.trim() || "1"
+        };
+
+    });
+
+    setupYears();
+
+});
+
+function setupYears(){
+
+    const years =
+        [...new Set(allData.map(r => r.year))]
+        .sort((a,b)=>b-a);
+
+    const select =
+        document.getElementById("yearSelect");
+
+    years.forEach(year=>{
+
+        const option =
+            document.createElement("option");
+
+        option.value = year;
+        option.textContent = year + "年";
+
+        select.appendChild(option);
+
+    });
+
+    select.addEventListener("change",()=>{
+
+        showPlayers(select.value);
+
+    });
+
+    showPlayers(years[0]);
+
+}
+
+function showPlayers(year){
+
+    document.getElementById("playerDetail")
+        .classList.add("hidden");
+
+    const players =
+        [...new Set(
+            allData
+            .filter(r=>r.year===year)
+            .map(r=>r.player)
+        )]
+        .sort();
+
+    const list =
+        document.getElementById("playerList");
+
+    list.innerHTML =
+        `<h2>${year}年 選手一覧</h2>`;
+
+    players.forEach(player=>{
+
+        const div =
+            document.createElement("div");
+
+        div.className = "player";
+        div.textContent = player;
+
+        div.onclick = ()=>{
+
+            showPlayerDetail(year,player);
+
+        };
+
+        list.appendChild(div);
+
+    });
+
+}
+
+function showPlayerDetail(year,player){
+
+    const rows =
+        allData.filter(r =>
+            r.player === player
+        );
+
+    const years =
+        [...new Set(
+            rows.map(r => r.year)
+        )]
+        .sort((a,b)=>b-a);
+
+    let html = `
+        <button onclick="
+            document.getElementById('playerDetail').classList.add('hidden')
+        ">
+            閉じる
+        </button>
+
+        <h2>${player}</h2>
+    `;
+
+    years.forEach(year=>{
+
+        html += `<h2>${year}年</h2>`;
+
+        const yearRows =
+            rows.filter(r =>
+                r.year === year
+            );
+
+        const grouped = {};
+
+        yearRows.forEach(row=>{
+
+            const order =
+                String(row.order).trim();
+
+            if(!grouped[order]){
+                grouped[order] = [];
+            }
+
+            grouped[order].push(row);
+
+        });
+
+        const orders =
+            Object.keys(grouped)
+            .sort((a,b)=>a-b);
+
+        orders.forEach(order=>{
+
+            html += `
+            <div class="change-block">
+
+            <table>
+
+            <tr>
+                <th>歌手名</th>
+                <th>曲名</th>
+                <th>条件等</th>
+                <th>備考</th>
+            </tr>
+            `;
+
+            grouped[order].forEach(row=>{
+
+                html += `
+                <tr>
+                    <td>${row.artist}</td>
+                    <td>${row.song}</td>
+                    <td>${row.condition}</td>
+                    <td>${row.note}</td>
+                </tr>
+                `;
+            });
+
+            html += `
+            </table>
+
+            </div>
+            `;
+        });
+
+    });
+
+    const detail =
+        document.getElementById("playerDetail");
+
+    detail.innerHTML = html;
+
+    detail.classList.remove("hidden");
+
+    detail.scrollIntoView({
+        behavior:"smooth"
+    });
+
+}
+
+
+
+
+    
+
+window.addEventListener("scroll",()=>{
+
+    const button =
+        document.getElementById("topButton");
+
+    if(window.scrollY > 300){
+
+        button.style.display = "block";
+
+    }else{
+
+        button.style.display = "none";
+
+    }
+
+});
+
+function scrollToTop(){
+
+    window.scrollTo({
+
+        top:0,
+        behavior:"smooth"
+
+    });
+
+}
+
+</script>
+
+<button id="topButton" onclick="scrollToTop()">
+▲ 上に戻る
+</button>
+
+</body>
+</html>
