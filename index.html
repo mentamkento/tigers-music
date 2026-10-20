@@ -133,6 +133,13 @@ summary:hover{
     color:#555;
 }
 
+.number{
+    display:inline-block;
+    width:70px;
+    color:#666;
+    font-weight:bold;
+}
+    
     
 </style>
 </head>
@@ -286,8 +293,8 @@ function showPlayers(year){
 
     div.className = "player";
 
-    div.textContent =
-        `${player.displayNumber}  ${player.player}`;
+    div.innerHTML =
+    `<span class="number">${player.displayNumber}</span>${player.player}`;
 
     div.onclick = ()=>{
 
