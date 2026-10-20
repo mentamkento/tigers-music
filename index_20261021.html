@@ -281,22 +281,27 @@ function showPlayers(year){
 
     players.forEach(player=>{
 
-        const div =
-            document.createElement("div");
+    const div =
+        document.createElement("div");
 
-        div.className = "player";
-        div.textContent = player;
+    div.className = "player";
 
-        div.onclick = ()=>{
+    div.textContent =
+        `${player.displayNumber}  ${player.player}`;
 
-            showPlayerDetail(year,player);
+    div.onclick = ()=>{
 
-        };
+        showPlayerDetail(
+            year,
+            player.player
+        );
 
-        list.appendChild(div);
+    };
 
-    });
+    list.appendChild(div);
 
+});
+    
 }
 
 function showPlayerDetail(year,player){
