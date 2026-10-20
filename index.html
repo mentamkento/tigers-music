@@ -236,30 +236,14 @@ function showPlayerDetail(year,player){
 
     const rows =
         allData.filter(r =>
-            r.year===year &&
-            r.player===player
+            r.player === player
         );
 
-    const grouped = {};
-
-    rows.forEach(row=>{
-
-        const order =
-            String(row.order).trim();
-
-        if(!grouped[order]){
-
-            grouped[order] = [];
-
-        }
-
-        grouped[order].push(row);
-
-    });
-
-    const orders =
-        Object.keys(grouped)
-        .sort((a,b)=>a-b);
+    const years =
+        [...new Set(
+            rows.map(r => r.year)
+        )]
+        .sort((a,b)=>b-a);
 
     let html = `
         <button onclick="
@@ -268,42 +252,70 @@ function showPlayerDetail(year,player){
             閉じる
         </button>
 
-        <h2>${player} (${year}年)</h2>
+        <h2>${player}</h2>
     `;
 
-    orders.forEach(order=>{
+    years.forEach(year=>{
 
-        html += `
-        <div class="change-block">
+        html += `<h2>${year}年</h2>`;
 
-        <table>
+        const yearRows =
+            rows.filter(r =>
+                r.year === year
+            );
 
-        <tr>
-            <th>歌手名</th>
-            <th>曲名</th>
-            <th>条件等</th>
-            <th>備考</th>
-        </tr>
-        `;
+        const grouped = {};
 
-        grouped[order].forEach(row=>{
+        yearRows.forEach(row=>{
 
-            html += `
-            <tr>
-                <td>${row.artist}</td>
-                <td>${row.song}</td>
-                <td>${row.condition}</td>
-                <td>${row.note}</td>
-            </tr>
-            `;
+            const order =
+                String(row.order).trim();
+
+            if(!grouped[order]){
+                grouped[order] = [];
+            }
+
+            grouped[order].push(row);
 
         });
 
-        html += `
-        </table>
+        const orders =
+            Object.keys(grouped)
+            .sort((a,b)=>a-b);
 
-        </div>
-        `;
+        orders.forEach(order=>{
+
+            html += `
+            <div class="change-block">
+
+            <table>
+
+            <tr>
+                <th>歌手名</th>
+                <th>曲名</th>
+                <th>条件等</th>
+                <th>備考</th>
+            </tr>
+            `;
+
+            grouped[order].forEach(row=>{
+
+                html += `
+                <tr>
+                    <td>${row.artist}</td>
+                    <td>${row.song}</td>
+                    <td>${row.condition}</td>
+                    <td>${row.note}</td>
+                </tr>
+                `;
+            });
+
+            html += `
+            </table>
+
+            </div>
+            `;
+        });
 
     });
 
@@ -319,6 +331,11 @@ function showPlayerDetail(year,player){
     });
 
 }
+
+
+
+
+    
 
 window.addEventListener("scroll",()=>{
 
