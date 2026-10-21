@@ -505,10 +505,19 @@ function showPlayerDetail(year,player){
 
     detail.classList.remove("hidden");
 
-    detail.scrollIntoView({
-        behavior:"smooth"
-    });
+    const header =
+    document.querySelector(".header");
 
+const y =
+    detail.getBoundingClientRect().top
+    + window.scrollY
+    - header.offsetHeight;
+
+window.scrollTo({
+    top:y,
+    behavior:"smooth"
+});
+    
 }
 
 
