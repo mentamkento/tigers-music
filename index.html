@@ -182,7 +182,7 @@ summary:hover{
 
     position:sticky;
 
-    top:110px;
+    top:var(--header-height);
 
     background:white;
 
@@ -544,6 +544,25 @@ function scrollToTop(){
 
 }
 
+function updateHeaderHeight(){
+
+    const header =
+        document.querySelector(".header");
+
+    document.documentElement.style.setProperty(
+        "--header-height",
+        header.offsetHeight + "px"
+    );
+
+}
+
+updateHeaderHeight();
+
+window.addEventListener(
+    "resize",
+    updateHeaderHeight
+);
+    
 </script>
 
 <button id="topButton" onclick="scrollToTop()">
