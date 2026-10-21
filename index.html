@@ -253,6 +253,21 @@ p{
 
     z-index:900;
 }
+
+.year-title{
+    background:#ffe201;
+    color:#333;
+
+    padding:8px 12px;
+
+    border-left:6px solid #d4b800;
+
+    margin-top:25px;
+    margin-bottom:10px;
+
+    font-weight:bold;
+}
+
     
     
 </style>
@@ -503,7 +518,8 @@ function showPlayerDetail(year,player){
 
     years.forEach(year=>{
 
-        html += `<h2>${year}年</h2>`;
+     html += `<h2 class="year-title">${year}年</h2>`;
+
 
         const yearRows =
             rows.filter(r =>
