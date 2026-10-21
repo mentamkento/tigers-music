@@ -376,40 +376,81 @@ p{
 let allData = [];
 
 fetch("archive_20261022.csv")
-.then(response => response.text())
+.then(response => {
+
+    if(!response.ok){
+        throw new Error("CSVの読み込みに失敗しました。");
+    }
+
+    return response.text();
+
+})
 .then(text => {
 
     const rows = text
-    .split(/\r?\n/)
-    .filter(row => {
-
-        const cols = row.split(",");
-
-        return cols.some(
-            value => value.trim() !== ""
+        .split(/\r?\n/)
+        .filter(row =>
+            row.replace(/,/g, "").trim() !== ""
         );
-    });
 
-    allData = rows.slice(1).map(row => {
+    allData = rows
+        .slice(1)
+        .map(row => {
 
-        const values =
-            row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g);
+            const values =
+                row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g);
 
-        return {
-            year: values[0]?.trim(),
-            player: values[1]?.trim(),
-            artist: values[2]?.replaceAll('"','').trim(),
-            song: values[3]?.replaceAll('"','').trim(),
-            condition: values[4]?.trim() || "",
-            note: values[5]?.trim() || "",
-            order: values[6]?.trim() || "1",
-            number: values[7]?.trim() || "999",
-            displayNumber: values[8]?.trim() || "#999"
-        };
-    });
+            /*
+            読み取れない行や列数が足りない行は
+            サイト全体を止めずに除外する
+            */
+            if(!values || values.length < 9){
+                console.warn(
+                    "読み込みを省略したCSV行:",
+                    row
+                );
+
+                return null;
+            }
+
+            return {
+                year: values[0]?.trim() || "",
+                player: values[1]?.trim() || "",
+                artist:
+                    values[2]?.replaceAll('"',"").trim() || "",
+                song:
+                    values[3]?.replaceAll('"',"").trim() || "",
+                condition: values[4]?.trim() || "",
+                note: values[5]?.trim() || "",
+                order: values[6]?.trim() || "1",
+                number: values[7]?.trim() || "999",
+                displayNumber:
+                    values[8]?.trim() || "#999"
+            };
+
+        })
+        .filter(item =>
+            item !== null &&
+            item.year !== "" &&
+            item.player !== ""
+        );
 
     setupYears();
 
+})
+.catch(error => {
+
+    console.error(error);
+
+    const list =
+        document.getElementById("playerList");
+
+    list.innerHTML = `
+        <p>
+            データを読み込めませんでした。
+            CSVファイル名と内容をご確認ください。
+        </p>
+    `;
 });
 
 function setupYears(){
