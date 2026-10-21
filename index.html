@@ -177,6 +177,24 @@ summary:hover{
     color:#333;
     font-weight:bold;
 }
+
+.player-title{
+
+    position:sticky;
+
+    top:110px;
+
+    background:white;
+
+    border-bottom:2px solid #ffe201;
+
+    padding:8px 0;
+
+    font-size:32px;
+    font-weight:bold;
+
+    z-index:900;
+}
     
     
 </style>
@@ -410,7 +428,10 @@ function showPlayerDetail(year,player){
             閉じる
         </button>
 
-        <h2>${player}</h2>
+        <div class="player-title">
+            ${player}
+        </div>
+        
     `;
 
     years.forEach(year=>{
