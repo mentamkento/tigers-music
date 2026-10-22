@@ -276,8 +276,17 @@ summary:hover{
 .guide-table td:nth-child(2){
     width:75%;
 }
-    
 
+.mobile-break{
+    display:none;
+}
+
+@media (max-width:768px){
+    .mobile-break{
+        display:inline;
+    }
+}
+    
     
 </style>
 </head>
@@ -589,7 +598,7 @@ let html = `
             <tr>
                 <td>途中まで</td>
                 <td>シーズン途中で何らかの変更がなされた曲
-                <br>（条件のみが変更された曲も含む）</td>
+                <span class="mobile-break"><br></span>（条件のみが変更された曲も含む）</td>
             </tr>
 
             <tr>
