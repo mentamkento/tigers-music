@@ -19,15 +19,11 @@ body{
 .header{
     position:sticky;
     top:0;
-
     display:flex;
     justify-content:space-between;
     align-items:center;
-
     background:#ffe201;
-    
     z-index:1000;
-
     margin-bottom:15px;
 }
 
@@ -99,7 +95,6 @@ table{
     width:100%;
     table-layout:fixed;
     border-collapse:collapse;
-
     font-size:clamp(12px,2.5vw,16px);
 }
 
@@ -151,19 +146,13 @@ button{
     position:fixed;
     right:20px;
     bottom:20px;
-
     padding:10px 15px;
-
     border:none;
     border-radius:8px;
-
     background:#333;
     color:#fff;
-
     cursor:pointer;
-
     display:none;
-
     z-index:999;
 }
 
@@ -215,15 +204,11 @@ summary:hover{
         margin-bottom:8px;
     }
 
-p{
-    font-size:14px;
-}
-
-    
+    p{
+        font-size:14px;
+    }
 
 }
-
-
     
 .number{
     display:inline-block;
@@ -236,54 +221,63 @@ p{
 }
 
 .player-title{
-
     position:sticky;
-
     top:var(--header-height);
-
     background:white;
-
     border-bottom:2px solid #ffe201;
-
     padding:8px 0;
-
     font-size:clamp(24px,5vw,32px);
-
     font-weight:bold;
-
     z-index:900;
 }
 
 .year-title{
     background:#ffe201;
     color:#333;
-
     padding:8px 12px;
-
     border-left:6px solid #d4b800;
-
     margin-top:25px;
     margin-bottom:10px;
-
     font-weight:bold;
 }
 
 .year-card{
-
     border:1px solid #ddd;
-
     border-radius:10px;
-
     padding:15px;
-
     margin-bottom:25px;
-
     background:#fff;
 }
 
+.note-guide{
+    margin-top:15px;
+}
 
+.guide-table{
+    width:100%;
+    margin-top:10px;
+    border-collapse:collapse;
+    table-layout:fixed;
+}
 
+.guide-table th,
+.guide-table td{
+    border:1px solid #ddd;
+    padding:8px;
+    vertical-align:top;
+}
+
+.guide-table th:nth-child(1),
+.guide-table td:nth-child(1){
+    width:40%;
+}
+
+.guide-table th:nth-child(2),
+.guide-table td:nth-child(2){
+    width:60%;
+}
     
+
     
 </style>
 </head>
@@ -568,18 +562,55 @@ function showPlayerDetail(year,player){
         )]
         .sort((a,b)=>b-a);
 
-    let html = `
-        <button onclick="
-            document.getElementById('playerDetail').classList.add('hidden')
-        ">
-            閉じる
-        </button>
+let html = `
+    <button onclick="
+        document.getElementById('playerDetail').classList.add('hidden')
+    ">
+        閉じる
+    </button>
 
-        <div class="player-title">
-            ${player}
-        </div>
-        
-    `;
+    <div class="player-title">
+        ${player}
+    </div>
+
+    <details class="note-guide">
+
+        <summary>
+            備考欄の見方
+        </summary>
+
+        <table class="guide-table">
+
+            <tr>
+                <th>備考</th>
+                <th>意味</th>
+            </tr>
+
+            <tr>
+                <td>途中まで</td>
+                <td>シーズン途中で使用されなくなった曲<br>シーズン途中で使用条件が変更された曲</td>
+            </tr>
+
+            <tr>
+                <td>曲変更</td>
+                <td>シーズン途中から使用されるようになった曲</td>
+            </tr>
+
+            <tr>
+                <td>条件変更</td>
+                <td>シーズン途中で使用条件が変更された曲</td>
+            </tr>
+
+            <tr>
+                <td>曲追加</td>
+                <td>シーズン途中から新たに使用されるようになった曲</td>
+            </tr>
+
+        </table>
+
+    </details>
+    
+`;
 
     years.forEach(year=>{
 
