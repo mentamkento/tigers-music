@@ -287,14 +287,19 @@ summary:hover{
     }
 }
 
-html{
+html::before{
+    content:"";
+    position:fixed;
+    top:0;
+    left:0;
+    width:100vw;
+    height:100vh;
     background-image:url("bg_koshien.jpg");
     background-repeat:no-repeat;
-    background-position:center top;
+    background-position:center center;
     background-size:cover;
-    background-attachment:fixed;    
+    z-index:-1;
 }
-
     
     
 </style>
