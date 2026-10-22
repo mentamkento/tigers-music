@@ -249,6 +249,10 @@ summary:hover{
     z-index:900;
 }
 
+.playerlist-title{
+    border-bottom:3px solid #ffe201;
+}
+    
 .year-title{
     background:#ffe201;
     color:#333;
@@ -566,7 +570,7 @@ function showPlayers(year){
         document.getElementById("playerList");
 
     list.innerHTML =
-        `<h2>${year}年 選手一覧</h2>`;
+        `<h2 class="playerlist-title">${year}年 選手一覧</h2>`;
 
     players.forEach(player=>{
 
