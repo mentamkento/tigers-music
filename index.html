@@ -59,15 +59,29 @@ body{
 }
 
     
-.youtube-icon img{
-    width:clamp(60px,10vw,90px);
-    height:clamp(60px,10vw,90px);
-    border-radius:50%;
-    position:relative;
-    top:5px;
-    margin-right:8px;
+.sns-links{
+    display:flex;
+    align-items:flex-start;
+    gap:3px;
 }
-
+.sns-item{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-decoration:none;
+    color:#333;
+    font-size:12px;
+    font-weight:bold;
+}
+.sns-item img{
+    width:clamp(55px,10vw,80px);
+    height:clamp(55px,10vw,80px);
+    border-radius:50%;
+}
+.sns-item span{
+    margin-top:2px;
+}
+    
 .youtube-link{
     color:#cc0000;
     font-weight:bold;
@@ -348,13 +362,22 @@ html::before{
         阪神タイガース<br>
         選手登場曲アーカイブ
     </span>
-</h1>
+    </h1>
 
-    <a class="youtube-icon"
+    <div class="sns-links">
+     <a class="sns-item"
        href="https://www.youtube.com/@mentam_yanen"
        target="_blank">
-       <img src="icon.png">
+        <img src="icon.png">
+        <span>YouTube</span>
     </a>
+    <a class="sns-item"
+       href="https://x.com/mentambase"
+       target="_blank">
+        <img src="Xicon.png">
+        <span>X</span>
+    </a>
+    </div>
 
 </div>
 
