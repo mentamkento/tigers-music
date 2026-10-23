@@ -62,7 +62,8 @@ body{
 .sns-links{
     display:flex;
     align-items:flex-start;
-    gap:3px;
+    padding-right:5px
+    gap:5px;
 }
 .sns-item{
     display:flex;
@@ -74,8 +75,8 @@ body{
     font-weight:bold;
 }
 .sns-item img{
-    width:clamp(55px,10vw,80px);
-    height:clamp(55px,10vw,80px);
+    width:clamp(55px,10vw,100px);
+    height:clamp(55px,10vw,100px);
     border-radius:50%;
 }
 .sns-item span{
@@ -225,11 +226,14 @@ summary:hover{
     .sp-title{
         display:block;
     }
-
+    
+    .sns-links{
+        gap:3px;
+    }   
     .sns-item{
         font-size:12px;
     }
-    
+
     summary{
         font-size:14px;
     }
@@ -372,13 +376,13 @@ html::before{
      <a class="sns-item"
        href="https://www.youtube.com/@mentam_yanen"
        target="_blank">
-        <img src="icon.png">
+        <img src="y_icon.png">
         <span>YouTube</span>
     </a>
     <a class="sns-item"
        href="https://x.com/mentambase"
        target="_blank">
-        <img src="Xicon.png">
+        <img src="x_icon.png">
         <span>X</span>
     </a>
     </div>
