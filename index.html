@@ -25,6 +25,10 @@ content="阪神タイガース選手登場曲アーカイブ。過去(2023年以
 
 <style>
 
+html{
+    overflow-y:scroll;
+}
+
 body{
     font-family:sans-serif;
     max-width:1200px;
@@ -200,9 +204,9 @@ button{
 }
 
 details{
-    margin-bottom:20px;
+    margin-bottom:10px;
     padding:10px;
-    border:1px solid #ddd;
+    border:1px solid #555;
     border-radius:8px;
     background:#fafafa;
 }
@@ -212,21 +216,127 @@ summary{
     font-weight:bold;
 }
 
+.game summary{
+    display:grid;
+    grid-template-columns:
+        110px   /* 日付 */
+        70px    /* 球場 */
+        25px    /* 勝敗 */
+        32px    /* 神 */
+        35px    /* 得点 */
+        20px    /* - */
+        35px    /* 得点 */
+        32px;   /* 相手 */
+
+    align-items:center;
+    gap:6px;
+    padding:5px 10px;
+}
+.game{
+    margin:4px 0 4px 20px;
+    padding:5px;
+}
+.game > summary{
+    padding:0;
+    min-height: 22px;
+}
+
+summary{
+    list-style:none;
+}
+
+summary::-webkit-details-marker{
+    display:none;
+}
+
+
+.date{
+    font-weight:bold;
+}
+.stadium{
+    text-align:left;
+}
+.team{
+    width:24px;
+    height:18px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    border-radius:3px;
+
+    font-size:14px;
+    font-weight:bold;
+}
+.tigers{
+    background:#ffe201;
+    color:#000;
+    border:1px solid #000;
+}
+.carp{
+    background:#ff0000;
+    color:#fff;
+    border:1px solid #000;
+}
+.giants{
+    background:#ff8c00;
+    color:#000;
+    border:1px solid #000;
+}
+.dragons{
+    background:#002277;
+    color:#fff;
+    border:1px solid #000;
+}
+.baystars{
+    background:#0088ff;
+    color:#fff;
+    border:1px solid #000;
+}
+.swallows{
+    background:#0d8a47;
+    color:#000;
+    border:1px solid #000;
+}
+
+.judge,
+.score,
+.dash{
+    text-align:center;
+}
+.score{
+    font-family: Consolas, Monaco, monospace;
+    font-weight:bold;
+    min-width:24px;
+}
+.win{
+    color:#008000;
+}
+.lose{
+    color:#c00000;
+}
+.report{
+    padding:10px 20px;
+    line-height:1.6;
+}
+
 summary:hover{
     color:#555;
 }
 
+.sp-date{
+    display:none;
+}
 
 @media (max-width:768px){
 
     .pc-title{
         display:none;
     }
-
     .sp-title{
         display:block;
     }
-    
     .sns-links{
         padding-right:5px
         gap:3px;
@@ -234,29 +344,58 @@ summary:hover{
     .sns-item{
         font-size:10px;
     }
-
     summary{
         font-size:14px;
     }
-
     details{
         font-size:12px;
 
         padding:8px;
         margin-bottom:15px;
     }
-
     details p{
         margin-top:8px;
         margin-bottom:8px;
     }
-    
     p{
         font-size:14px;
     }
 
+    .game{
+        margin-left:0px;
+    }
+    .game > summary{
+        grid-template-columns:
+            65px   /* 日付 */
+            40px   /* 球場 */
+            15px   /* 勝敗 */
+            18px   /* 神 */
+            22px   /* 得点 */
+            10px   /* - */
+            22px   /* 得点 */
+            18px;  /* 相手 */
+        gap:2px;
+        font-size:11px;
+    }
+    .team{
+        width:16px;
+        height:14px;
+        font-size:10px;
+    }
+    .score{
+        font-size:11px;
+    }
+    .pc-date{
+        display:none;
+    }
+
+    .sp-date{
+        display:inline;
+    }
+
 }
-    
+
+
 .number{
     display:inline-block;
     width:55px;
@@ -396,22 +535,20 @@ html::before{
 このサイトをご覧になる方へ
 </summary>
 <p>
-このサイトでは2023年以降の阪神タイガースの選手登場曲をまとめています。（整備中データあり）
-</p>
-<p>
+このサイトでは2023年以降の阪神タイガースの選手登場曲をまとめています。
+<br>
 公式サイトの情報に基づき運営者が独自に収集した資料になりますので、
-必ずしも抜け漏れがないわけではございません。
-ご了承ください。
+正確性に責任は負えませんがご了承ください。<br>（誤りと思われる箇所がありましたら、XやYouTubeのコメントにてご報告ください。）
 </p>
 </details>
 
 <details>
 <summary>
-めんたむケント（サイト運営者）の各種リンク
+めんたむケント　各種リンク
 </summary>
 <p>
-当サイトの運営者は阪神タイガースの選手登場曲を追いかけて、
-選手登場曲を紹介するYouTube動画を時々投稿しているプロ野球ファンです。
+当サイトの運営者：めんたむケント<br>
+阪神タイガースの選手登場曲を追いかけて、選手登場曲を紹介するYouTube動画を時々投稿しているプロ野球ファンです。
 </p>
 <p>
 <a href="https://www.youtube.com/@mentam_yanen"
@@ -427,10 +564,99 @@ html::before{
 ＞＞X（旧Twitter）はこちら
 </a>
 </p>
-<p>
-画面右上のアイコンをクリックしても飛べます。Ｘは開設直後ですが、今後は動画投稿やサイト更新をお知らせしてまいります。もちろん普通の阪神ファンとしても呟くかも…
-</p>
 </details>
+
+<details>
+<summary>
+めんたむケント　直近の現地観戦ログ
+</summary>
+<p>
+直近の現地観戦記録です。各枠クリックで詳細な感想が読めます。
+</p>
+    <details class="game">
+        <summary>
+            <span class="date">
+                <span class="pc-date">2026/04/17</span>
+                <span class="sp-date">26/04/17</span>
+            </span>
+            <span class="stadium">甲子園</span>
+            <span class="judge win">○</span>
+            <span class="team tigers">神</span>
+            <span class="score">2</span>
+            <span class="dash">-</span>
+            <span class="score">1</span>
+            <span class="team dragons">中</span>
+        </summary>
+        <div class="report">
+            <b>村上投手</b>が初回に先制されたときは「今年はアカンなぁ」なんて話していたが、
+            中日の<b>細川選手</b>と<b>花田選手</b>が左中間で衝突して落球するというミスに漬け込んで同点に追いつき、
+            その次の回には<b>森下選手</b>が<b>根尾投手</b>から勝ち越しホームランを放ち勝利。
+            <b>村上投手</b>の後を受けた<b>モレッタ投手</b>が勝ち投手になった。<br>
+            中日の中継ぎが苦しいことは知っていたので、ミスを機に同点になった時点で勝ちを確信していた。
+            なので現地では意外にも安心感が漂っていたが、後から数字だけを見てみると危なっかしい展開であった。
+        </div>
+    </details>
+    <details class="game">
+        <summary>
+            <span class="date">
+                <span class="pc-date">2026/04/19</span>
+                <span class="sp-date">26/04/19</span>
+            </span>
+            <span class="stadium">甲子園</span>
+            <span class="judge win">○</span>
+            <span class="team tigers">神</span>
+            <span class="score">7</span>
+            <span class="dash">-</span>
+            <span class="score">5</span>
+            <span class="team dragons">中</span>
+        </summary>
+        <div class="report">
+            中日の先発が<b>髙橋宏人投手</b>であったため、渋い展開を想像していたが、初回の表裏が終わった時点で３－２という大味な試合に。
+            しかし、２回と３回も中日は得点したのに対し、阪神は無得点。
+            さらに阪神先発の<b>伊原投手</b>は何らかのアクシデントのため２回途中で降板。序盤から不穏な空気が立ち込める。
+            しかし５回裏に四死球で作ったチャンスで<b>大山選手</b>がタイムリーを放ち追いつきムードが一変した。
+            さらに次の回で<b>斎藤投手</b>から勝ち越し、その次の回で<b>根尾投手</b>から追加点を取り、結果的に大逆転勝ち。<br>
+            中日の中継ぎが苦しすぎる上に<b>髙橋宏人投手</b>が不安定だったのを、今の阪神の上位打線が見逃すはずがなかった。
+            中日との相性がそのまま表れたような総力戦に現地はお祭り騒ぎだった。
+        </div>
+    </details>
+    <details class="game">
+        <summary>
+            <span class="date">
+                <span class="pc-date">2026/10/07</span>
+                <span class="sp-date">26/10/07</span>
+            </span>
+            <span class="stadium">甲子園</span>
+            <span class="judge win">○</span>
+            <span class="team tigers">神</span>
+            <span class="score">2x</span>
+            <span class="dash">-</span>
+            <span class="score">1</span>
+            <span class="team carp">広</span>
+        </summary>
+        <div class="report">
+            <b>西勇輝投手</b>の引退試合。変幻自在に相手を抑える姿に拍手が止まらない。<br>
+            しかし、<b>西勇輝投手</b>が降板したあとはピリッとせず、<b>石黒投手</b>がピンチを背負って先制点を与えてしまう。
+            そのあとのピンチは緊急登板の<b>セベリーノ投手</b>が抑えたものの、ムードが悪い。
+            というのも、打線全体が疲れ気味なのか、現地は点が取れる雰囲気ではなかった。<b>佐藤輝明選手</b>の４０号もお預けになった。<br>
+            なんとか終盤で追いついたが、消化試合ゆえに主力が続々とベンチに下がり、二軍戦のようなメンツで延長戦を迎えた。<br>
+            阪神の弱点が選手層の薄さというのは明らかだったので「引退セレモニーは１２回裏が終わってからだな」と
+            遠方から来たファンが落胆していたその時、カープの<b>ターノック投手</b>が荒れに荒れた。
+            <b>小野寺選手</b>が歩き、代走の<b>植田選手</b>が走り、<b>熊谷選手</b>が送り、
+            最後は<b>梅野選手</b>のゴロの間に<b>植田選手</b>が快足でホームへ駆け込み、記録はサヨナラヒット。<br>
+            グダグダな内容ではあったが、最後に<b>西勇輝投手</b>の女房役が決めてくれてよかった。
+            ヒーローインタビューも上手だった。引退セレモニー、感動した。
+        </div>
+    </details>
+
+
+
+
+
+</details>
+
+
+
 <details>
 <summary>
 更新履歴
