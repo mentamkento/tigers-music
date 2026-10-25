@@ -222,8 +222,8 @@ summary{
     padding:5px 10px;
 }
 .game > summary::before{
-    width:auto;
     justify-self:center;
+    margin-right:0;
 }
 .game{
     margin:4px 0 4px 20px;
@@ -241,14 +241,24 @@ summary::-webkit-details-marker{
 }
 
 summary::before{
-    content:"▶";
+    content:"";
     display:inline-block;
-    width:20px;
-    color:#666;
+
+    width:8px;
+    height:8px;
+
+    margin-right:10px;
+
+    border-right:2px solid #666;
+    border-bottom:2px solid #666;
+
+    transform:rotate(-45deg);
+
+    transition:transform 0.2s;
 }
 
 details[open] > summary::before{
-    content:"▼";
+    transform:rotate(45deg);
 }
 
 .date{
@@ -300,6 +310,21 @@ details[open] > summary::before{
     color:#000;
     border:1px solid #000;
 }
+.fighters{
+    background:#70723c;
+    color:#fff;
+    border:1px solid #000;
+}
+.marines{
+    background:#333;
+    color:#fff;
+    border:1px solid #000;
+}
+.lions{
+    background:#090c99;
+    color:#fff;
+    border:1px solid #000;
+}
 
 .judge,
 .score,
@@ -313,9 +338,6 @@ details[open] > summary::before{
 }
 .win{
     color:#008000;
-}
-.lose{
-    color:#c00000;
 }
 .report{
     padding:10px 20px;
@@ -569,10 +591,10 @@ html::before{
 
 <details>
 <summary>
-めんたむケント　直近の現地観戦ログ
+めんたむケント　現地観戦ログ
 </summary>
 <p>
-日付枠クリックで詳細な感想が読めます。再クリックで閉じます
+■ 2026年度の現地観戦（３勝／３試合）
 </p>
     <details class="game">
         <summary>
@@ -649,6 +671,78 @@ html::before{
             ヒーローインタビューも上手だった。引退セレモニー、感動した。
         </div>
     </details>
+<p>
+■ 過年度で印象的だった現地観戦
+</p>
+    <details class="game">
+            <summary>
+                <span class="date">
+                    <span class="pc-date">2017/09/14</span>
+                    <span class="sp-date">17/09/14</span>
+                </span>
+                <span class="stadium">札幌</span>
+                <span class="judge win">●</span>
+                <span class="team fighters">日</span>
+                <span class="score">4</span>
+                <span class="dash">-</span>
+                <span class="score">6</span>
+                <span class="team marines">ロ</span>
+            </summary>
+            <div class="report">
+                北海道旅行中に観戦した試合。この日はなんといっても<b>角中選手</b>のランニングホームラン。<br>
+                <b>角中選手</b>の放った左中間の打球に俊足センター<b>西川選手</b>が追いついて打球がグラブに入ったのだが、
+                捕球体勢が崩れ、派手に転倒した際にグラブからボールがこぼれ落ち、完全捕球と見なされずランニングホームランになった。
+                ドタドタとホームまで全力で走る<b>角中選手</b>。足が速いからこそ打球に追いついてしまった<b>西川選手</b>。その対比がおもしろい瞬間だった。
+            </div>
+        </details>
+
+    <details class="game">
+            <summary>
+                <span class="date">
+                    <span class="pc-date">2018/09/27</span>
+                    <span class="sp-date">18/09/27</span>
+                </span>
+                <span class="stadium">甲子園</span>
+                <span class="judge win">●</span>
+                <span class="team tigers">神</span>
+                <span class="score">3</span>
+                <span class="dash">-</span>
+                <span class="score">4</span>
+                <span class="team baystars">横</span>
+            </summary>
+            <div class="report">
+                忘れもしない。<b>大山選手</b>のランニングホームラン。<br>
+                センター前へのライナーに<b>乙坂選手</b>が前方へダイビングし、捕球したように見えた。
+                しかし実はワンバウンドしたと判定されていて、球場全体が状況を飲み込めていない間に、
+                まじめな<b>大山選手</b>はホームまで走り続け、<b>乙坂選手</b>は捕球した自信があったのか、座り込んだまま内野へ返球せず（←これがダメだった）。
+                ランニングホームランだと分かった瞬間、<b>ウィーランド投手</b>がダイヤモンドの中心で頭を抱えたシーンはいつまでも覚えている。
+            </div>
+        </details>
+        <details class="game">
+            <summary>
+                <span class="date">
+                    <span class="pc-date">2018/09/30</span>
+                    <span class="sp-date">18/09/30</span>
+                </span>
+                <span class="stadium">札幌</span>
+                <span class="judge win">○</span>
+                <span class="team fighters">日</span>
+                <span class="score">4</span>
+                <span class="dash">-</span>
+                <span class="score">1</span>
+                <span class="team lions">西</span>
+            </summary>
+            <div class="report">
+                北海道旅行の帰りの飛行機が欠航し、急きょ観戦した試合。<br>
+                それが偶然にも<b>石井裕也投手</b>の引退試合で、さらに西武の優勝が決定した日でもある。
+                よって、試合後には西武の胴上げがあり、<b>辻監督</b>のスピーチがあり、そして<b>石井裕也投手</b>の引退セレモニーがあり、盛りだくさんの１日になった。<br>
+                <b>石井裕也投手</b>は生まれつきの難聴を抱えながらもプロ野球の世界に入り活躍した選手。
+                マウンドでは補聴器の電源を切って投げる姿から"サイレントＫ"という異名を持つ。
+                引退セレモニーでは、これまでにサポートしてくれた方への感謝の言葉がたくさん述べられた。<br>
+                感動や尊敬の一言では片づけられない、何か心が動かされた１日。飛行機が欠航したからこそ現地で見れた最高の試合。
+            </div>
+        </details>
+
 
 
 
@@ -663,9 +757,10 @@ html::before{
 更新履歴
 </summary>
 <p>
-2026.10.21　2023年～2026年のデータ取込完了<br>
+2026.10.21　登場曲データ取込完了<br>
 2026.10.23　テスト公開期間　開始<br>
-2026.10.25　直近の現地観戦ログ　表示開始
+2026.10.25　現地観戦ログ　表示開始<br>
+その他、細かな更新を実施することがあります。
 </p>
 </details>
     
