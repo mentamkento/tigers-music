@@ -1173,10 +1173,12 @@ window.addEventListener(
 
 document.querySelectorAll("details").forEach(detail => {
     detail.addEventListener("toggle", () => {
-        if (!detail.open) {
 
-            detail.querySelectorAll("details").forEach(child => {
-                child.open = false;
+        if (!detail.open) {
+            const children =
+                detail.querySelectorAll("details");
+            children.forEach(child => {
+                child.removeAttribute("open");
             });
         }
     });
