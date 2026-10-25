@@ -219,6 +219,7 @@ summary{
 .game summary{
     display:grid;
     grid-template-columns:
+        20px    /* 矢印 */
         110px   /* 日付 */
         70px    /* 球場 */
         25px    /* 勝敗 */
@@ -231,6 +232,10 @@ summary{
     align-items:center;
     gap:6px;
     padding:5px 10px;
+}
+.game > summary::before{
+    width:auto;
+    justify-self:center;
 }
 .game{
     margin:4px 0 4px 20px;
@@ -249,6 +254,16 @@ summary::-webkit-details-marker{
     display:none;
 }
 
+summary::before{
+    content:"▶";
+    display:inline-block;
+    width:20px;
+    color:#666;
+}
+
+details[open] > summary::before{
+    content:"▼";
+}
 
 .date{
     font-weight:bold;
@@ -663,8 +678,8 @@ html::before{
 </summary>
 <p>
 2026.10.21　2023年～2026年のデータ取込完了<br>
-2026.10.23　テスト公開期間　開始
-2026.10.25　【直近の現地観戦ログ】表示開始
+2026.10.23　テスト公開期間　開始<br>
+2026.10.25　直近の現地観戦ログ　表示開始
 </p>
 </details>
     
