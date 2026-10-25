@@ -447,6 +447,10 @@ summary:hover{
 }
     
 .year-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
     background:#ffe201;
     color:#333;
     padding:8px 12px;
@@ -455,6 +459,14 @@ summary:hover{
     margin-bottom:0;
     font-weight:bold;
 }
+
+.year-number{
+    font-size:0.9em;
+    color:#d4b800;
+    font-style:italic;
+    font-family:Consolas, Monaco, monospace;
+}
+
 
 .year-card{
     border:1px solid #ddd;
@@ -760,9 +772,7 @@ html::before{
 2026.10.21　登場曲データ取込完了<br>
 2026.10.23　テスト公開期間　開始<br>
 2026.10.25　現地観戦ログ　表示開始<br>
-その他、細かな更新を実施することがあります。<br>
-<br>
-現在、スマホで現地観戦ログを開いた際に、とある条件で文字が見えなくなる事象を確認していますが、再度閉じてから開くと表示されます。お手数おかけします。
+その他、細かな更新を実施することがあります。
 </p>
 </details>
     
@@ -1026,18 +1036,25 @@ let html = `
     
 `;
 
-    years.forEach(year=>{
+    years.forEach(year => {
 
-     html += `
-    <h2 class="year-title">${year}年</h2>
-    <div class="year-card">`;
+    const yearRows =
+        rows.filter(r =>
+            r.year === year
+        );
 
+    const displayNumber =
+        yearRows[0]?.displayNumber || "";
 
-
-        const yearRows =
-            rows.filter(r =>
-                r.year === year
-            );
+    html += `
+        <h2 class="year-title">
+            <span>${year}年</span>
+            <span class="year-number">
+                ${displayNumber}
+            </span>
+        </h2>
+        <div class="year-card">
+    `;
 
         const grouped = {};
 
@@ -1173,18 +1190,6 @@ window.addEventListener(
     updateHeaderHeight
 );
 
-document.querySelectorAll("details").forEach(detail => {
-    detail.addEventListener("toggle", () => {
-
-        if (!detail.open) {
-            const children =
-                detail.querySelectorAll("details");
-            children.forEach(child => {
-                child.removeAttribute("open");
-            });
-        }
-    });
-});
 
     
 </script>
