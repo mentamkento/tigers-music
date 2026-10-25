@@ -52,21 +52,10 @@ body{
     display:none;
 }
 
-@media (max-width:768px){
-
-    .pc-title{
-        display:none;
-    }
-    .sp-title{
-        display:block;
-    }
-}
-
-    
 .sns-links{
     display:flex;
     align-items:flex-start;
-    padding-right:15px
+    padding-right:15px;
     gap:5px;
 }
 .sns-item{
@@ -210,12 +199,11 @@ details{
     border-radius:8px;
     background:#fafafa;
 }
-
 summary{
     cursor:pointer;
     font-weight:bold;
+    list-style:none;
 }
-
 .game summary{
     display:grid;
     grid-template-columns:
@@ -246,9 +234,7 @@ summary{
     min-height: 22px;
 }
 
-summary{
-    list-style:none;
-}
+
 
 summary::-webkit-details-marker{
     display:none;
@@ -353,7 +339,7 @@ summary:hover{
         display:block;
     }
     .sns-links{
-        padding-right:5px
+        padding-right:3px;
         gap:3px;
     }   
     .sns-item{
@@ -364,7 +350,6 @@ summary:hover{
     }
     details{
         font-size:12px;
-
         padding:8px;
         margin-bottom:15px;
     }
@@ -1090,7 +1075,16 @@ window.addEventListener(
     updateHeaderHeight
 );
 
+document.querySelectorAll("details").forEach(detail => {
+    detail.addEventListener("toggle", () => {
+        if (!detail.open) {
 
+            detail.querySelectorAll("details").forEach(child => {
+                child.open = false;
+            });
+        }
+    });
+});
 
     
 </script>
