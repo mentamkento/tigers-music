@@ -110,13 +110,35 @@ select{
 }
 
 .player{
+    position:relative;
     padding:8px;
     border-bottom:1px solid #bbb;
     cursor:pointer;
 }
+.player::after{
+    content:"";
+    position:absolute;
+    top:3px;
+    bottom:3px;
+    right:0;
+    width:12px;
+    border-radius:3px;
+}
 
 .player:hover{
     background:#f5f5f5;
+}
+.player.pitcher::after{
+    background:#ff84a9;
+}
+.player.catcher::after{
+    background:#84b5ff;
+}
+.player.infielder::after{
+    background:#f3ff84;
+}
+.player.outfielder::after{
+    background:#84ff8a;
 }
 
 .change-block{
@@ -415,7 +437,13 @@ summary:hover{
     .sp-date{
         display:inline;
     }
-
+    .year-number{
+        width:60px;
+        font-size:0.9em;
+    }
+    .mobile-break{
+        display:inline;
+    }
 }
 
 
@@ -449,24 +477,40 @@ summary:hover{
 .year-title{
     display:flex;
     justify-content:space-between;
-    align-items:center;
-
+    align-items:stretch;
     background:#ffe201;
     color:#333;
-    padding:8px 12px;
     border-left:6px solid #d4b800;
     margin-top:25px;
     margin-bottom:0;
     font-weight:bold;
 }
-
+.year-label{
+    padding:8px 12px;
+}
 .year-number{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:90px;
+    padding:0 12px;
     font-size:1.0em;
-    color:#d4b800;
+    color:#666;
     font-style:italic;
     font-family:Consolas, Monaco, monospace;
 }
-
+.year-number.pitcher{
+    background:#ff84a9;
+}
+.year-number.catcher{
+    background:#84b5ff;
+}
+.year-number.infielder{
+    background:#f3ff84;
+}
+.year-number.outfielder{
+    background:#84ff8a;
+}
 
 .year-card{
     border:1px solid #ddd;
@@ -508,11 +552,7 @@ summary:hover{
     display:none;
 }
 
-@media (max-width:768px){
-    .mobile-break{
-        display:inline;
-    }
-}
+
 
 html::before{
     content:"";
@@ -772,6 +812,7 @@ html::before{
 2026.10.21　登場曲データ取込完了<br>
 2026.10.23　テスト公開期間　開始<br>
 2026.10.25　現地観戦ログ　表示開始<br>
+2026.10.27　ポジション色の表示追加<br>
 その他、細かな更新を実施することがあります。
 </p>
 </details>
@@ -798,7 +839,7 @@ html::before{
 
 let allData = [];
 
-fetch("archive_20261024.csv")
+fetch("archive_20261027.csv")
 .then(response => {
 
     if(!response.ok){
@@ -839,16 +880,14 @@ fetch("archive_20261024.csv")
             return {
                 year: values[0]?.trim() || "",
                 player: values[1]?.trim() || "",
-                artist:
-                    values[2]?.replaceAll('"',"").trim() || "",
-                song:
-                    values[3]?.replaceAll('"',"").trim() || "",
+                artist: values[2]?.replaceAll('"',"").trim() || "",
+                song: values[3]?.replaceAll('"',"").trim() || "",
                 condition: values[4]?.trim() || "",
                 note: values[5]?.trim() || "",
                 order: values[6]?.trim() || "1",
                 number: values[7]?.trim() || "999",
-                displayNumber:
-                    values[8]?.trim() || "#999"
+                displayNumber: values[8]?.trim() || "#999",
+                position: values[9]?.trim() || ""
             };
 
         })
@@ -923,11 +962,10 @@ function showPlayers(year){
             if(!acc[row.player]){
 
                 acc[row.player] = {
-
                     player: row.player,
                     number: row.number,
-                    displayNumber: row.displayNumber
-
+                    displayNumber: row.displayNumber,
+                    position: row.position
                 };
 
             }
@@ -958,7 +996,18 @@ function showPlayers(year){
     const div =
         document.createElement("div");
 
-    div.className = "player";
+    let posClass = "";
+
+        if(player.position === "投手"){
+            posClass = "pitcher";
+        }else if(player.position === "捕手"){
+            posClass = "catcher";
+        }else if(player.position === "内野手"){
+            posClass = "infielder";
+        }else if(player.position === "外野手"){
+            posClass = "outfielder";
+        }
+        div.className = `player ${posClass}`;
 
     div.innerHTML =
     `<span class="number">${player.displayNumber}</span>${player.player}`;
@@ -1044,12 +1093,32 @@ let html = `
         );
 
     const displayNumber =
-        yearRows[0]?.displayNumber || "";
+    yearRows[0]?.displayNumber || "";
+
+        const position =
+            yearRows[0]?.position || "";
+
+        let yearPosClass = "";
+
+        if(position === "投手"){
+            yearPosClass = "pitcher";
+        }else if(position === "捕手"){
+            yearPosClass = "catcher";
+        }else if(position === "内野手"){
+            yearPosClass = "infielder";
+        }else if(position === "外野手"){
+            yearPosClass = "outfielder";
+        }
 
     html += `
         <h2 class="year-title">
-            <span>${year}年</span>
-            <span class="year-number">
+            <span class="year-label">
+                ${year}年
+            </span>
+            <span class="
+                year-number
+                ${yearPosClass}
+            ">
                 ${displayNumber}
             </span>
         </h2>
