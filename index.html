@@ -578,7 +578,31 @@ html::before{
     opacity:0.5;
     z-index:-1;
 }
-    
+
+footer{
+    background:#333;
+    border-top:5px solid #ffe201;
+    padding-bottom:20px;
+}
+
+footer details{
+    margin-top:5px;
+    margin-left:5px;
+    margin-right:5px;
+    background:#111;
+    border:1px solid #444;
+    color:#fff;
+}
+
+footer summary:hover{
+    color:#ddd;
+}
+
+footer summary::before{
+    border-right:2px solid #ddd;
+    border-bottom:2px solid #ddd;
+}
+
     
 </style>
 </head>
@@ -615,7 +639,6 @@ html::before{
 </div>
 
 <details>
-
 <summary>
 このサイトをご覧になる方へ
 </summary>
@@ -626,6 +649,33 @@ html::before{
 正確性に責任は負えませんがご了承ください。<br>（誤りと思われる箇所がありましたら、XやYouTubeのコメントにてご報告ください。）
 </p>
 </details>
+
+<details>
+<summary>
+更新履歴
+</summary>
+<p>
+2026.10.21　登場曲データ取込完了<br>
+2026.10.23　テスト公開期間　開始<br>
+2026.11.15　画面レイアウトの更新<br>
+その他、細かな更新を実施することがあります。
+</p>
+</details>
+        
+<label>年度：</label>
+<select id="yearSelect"></select>
+
+<hr>
+
+<p>
+年度を指定すると、その年度に在籍していた選手を選択することができます。
+</p>
+    
+<div id="playerList"></div>
+
+<div id="playerDetail" class="hidden"></div>
+
+<footer>
 
 <details>
 <summary>
@@ -814,36 +864,10 @@ html::before{
 
 
 
-<details>
-<summary>
-更新履歴
-</summary>
-<p>
-2026.10.21　登場曲データ取込完了<br>
-2026.10.23　テスト公開期間　開始<br>
-2026.10.25　現地観戦ログ　表示開始<br>
-2026.10.27　ポジション色の表示追加<br>
-その他、細かな更新を実施することがあります。
-</p>
-</details>
-    
-
-    
-<label>年度：</label>
-<select id="yearSelect"></select>
 
 
-    
+</footer>
 
-<hr>
-
-<p>
-年度を指定すると、その年度に在籍していた選手を選択することができます。
-</p>
-    
-<div id="playerList"></div>
-
-<div id="playerDetail" class="hidden"></div>
 
 <script>
 
