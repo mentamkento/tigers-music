@@ -119,10 +119,47 @@ h2{
     margin-top:30px;
 }
 
-select{
-    padding:8px;
-    font-size:16px;
+.year-selector{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin:15px 0;
 }
+
+.year-selector select{
+    width:110px;
+    margin:0;
+    padding:8px;
+    font-size:18px;
+}
+
+.year-selector span{
+    font-size:18px;
+    font-weight:bold;
+}
+
+.search-guide{
+    background:#333;
+    color:#fff;
+
+    border-left:10px solid #ffe201;
+
+    padding:15px 20px;
+    margin:15px 0 25px 0;
+}
+
+.guide-title{
+    color:#ffe201;
+    font-size:20px;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.guide-text{
+    margin-top:10px;
+    color:#ddd;
+}
+
 
 .player{
     position:relative;
@@ -459,6 +496,21 @@ summary:hover{
     .mobile-break{
         display:inline;
     }
+
+    .year-selector{
+        gap:6px;
+    }
+
+    .year-selector select{
+        width:95px;
+        font-size:16px;
+    }
+
+    .year-selector span{
+        font-size:15px;
+    }
+
+
 }
 
 
@@ -646,46 +698,7 @@ footer summary::before{
 
 <details>
 <summary>
-このサイトをご覧になる方へ
-</summary>
-<p>
-このサイトでは2023年以降の阪神タイガースの選手登場曲をまとめています。
-<br>
-公式サイトの情報に基づき運営者が独自に収集した資料になりますので、
-正確性に責任は負えませんがご了承ください。<br>（誤りと思われる箇所がありましたら、XやYouTubeのコメントにてご報告ください。）
-</p>
-</details>
-
-<details>
-<summary>
-更新履歴
-</summary>
-<p>
-2026.10.21　登場曲データ取込完了<br>
-2026.10.23　テスト公開期間　開始<br>
-2026.11.15　画面レイアウトの更新<br>
-その他、細かな更新を実施することがあります。
-</p>
-</details>
-        
-<label>年度：</label>
-<select id="yearSelect"></select>
-
-<hr>
-
-<p>
-年度を指定すると、その年度に在籍していた選手を選択することができます。
-</p>
-    
-<div id="playerList"></div>
-
-<div id="playerDetail" class="hidden"></div>
-
-<footer>
-
-<details>
-<summary>
-めんたむケント　各種リンク
+サイト運営者（めんたむケント）各種リンク
 </summary>
 <p>
 当サイトの運営者：めんたむケント<br>
@@ -706,6 +719,31 @@ footer summary::before{
 </a>
 </p>
 </details>
+        
+<div class="search-guide">
+
+    <div class="guide-title">
+        🔍選手名から登場曲を検索
+    </div>
+
+    <div class="year-selector">
+        <select id="yearSelect"></select>
+        <span>の在籍選手を表示</span>
+    </div>
+
+    <div class="guide-text">
+        選手名を選択すると登場曲が表示されます！
+    </div>
+
+</div>
+
+
+<div id="playerList"></div>
+
+<div id="playerDetail" class="hidden"></div>
+
+<footer>
+
 
 <details>
 <summary>
@@ -868,6 +906,18 @@ footer summary::before{
 
 </details>
 
+<details>
+<summary>
+更新履歴
+</summary>
+<p>
+2026.10.21　登場曲データ取込完了<br>
+2026.10.23　テスト公開期間　開始<br>
+2026.11.15　画面レイアウトの更新<br>
+2026.11.19　画面レイアウトの更新<br>
+その他、細かな更新を実施することがあります。
+</p>
+</details>
 
 
 
